@@ -20,7 +20,7 @@ for (let o of operators) {
 
 clear.addEventListener("click", pressClear);
 clearE.addEventListener("click", pressBackspace);
-plusmn.addEventListener("click", pressPlusmn);
+// plusmn.addEventListener("click", pressPlusmn);
 equals.addEventListener("click", pressEquals);
 decimal.addEventListener("click", pressDecimal);
 
@@ -121,10 +121,6 @@ function pressDecimal() {
 function pressOperator(e) {
   //if history is empty, or two operators have been hit, return
   let operator = e;
-  if (e === "-" && (isHistoryOperator(history.innerText.length - 1) || history.innerText === "")) {
-    pressPlusmn();
-    return;
-  }
   if (
     history.innerText === "" ||
     input.innerText.search(/[a-z><]/gi) !== -1 ||
@@ -172,30 +168,6 @@ function pressBackspace() {
   }
 
   history.innerText = history.innerText.slice(0, history.innerText.length - 1);
-}
-
-//positive or negative
-function pressPlusmn() {
-  if (equalsPressed()) {
-    input.innerText = "-";
-    history.innerText = "-";
-  } else if (isHistoryTooLong() || isInputTooLong()) {
-    return;
-  } else if (history.innerText === "-") {
-    input.innerText = "";
-    history.innerText = "";
-  } else if (isHistoryOperator(history.innerText.length - 1) && !isHistoryOperator(history.innerText.length - 2)) {
-    input.innerText = "-";
-    history.innerText += "-";
-  } else if (!input.innerText.includes("-")) {
-    let hindex = history.innerText.lastIndexOf(input.innerText);
-    input.innerText = "-" + input.innerText;
-    history.innerText = history.innerText.slice(0, hindex) + input.innerText;
-  } else {
-    let hindex = history.innerText.lastIndexOf(input.innerText);
-    input.innerText = input.innerText.slice(1);
-    history.innerText = history.innerText.slice(0, hindex) + input.innerText;
-  }
 }
 
 function pressEquals() {
